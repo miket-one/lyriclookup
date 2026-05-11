@@ -37,7 +37,7 @@
     <script>
       async function searchSong() {
         const title = await getTitle();
-        getLyric(title);
+        const lyric = await getLyric(title);
       }
 
       /**
@@ -58,11 +58,11 @@
         // Convert song title to URI
         const queryValue = encodeURIComponent(title).replace(/%20/g, "+");
 
-        fetch(`https://lrclib.net/api/search?q=${queryValue}`)
+        return fetch(`https://lrclib.net/api/search?q=${queryValue}`)
           .then((response) => response.json())
           .then((data) => {
-            const lyric = data[0].plainLyrics;
-            console.log(lyric);
+            console.log(`Lyric: ${data[0].plainLyrics}`);
+            return data[0].plainLyrics;
           });
       }
     </script>
