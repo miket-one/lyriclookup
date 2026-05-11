@@ -34,12 +34,22 @@
       required
     />
     <button id="search" onclick="searchSong()">Search</button>
+    <div id="video"></div>
     <div id="lyric"></div>
     <script>
       async function searchSong() {
+        const yt_url = new URL(document.getElementById("url").value);
+        const videoID = new URLSearchParams(yt_url.search).get("v");
+        console.log(videoID);
+
         const title = await getTitle();
         const lyric = await getLyric(title);
 
+        // Insert iframe of YouTube video
+        const container = document.getElementById("video");
+        container.innerHTML = `<iframe src="https://corsproxy.io/?url=https://www.youtube.com/embed/${videoID}"></iframe>`;
+
+        //Print out lyrics
         document.getElementById("lyric").innerHTML =
           "<p>" + lyric.replace(/\n/g, "<br>") + "</p>";
       }
