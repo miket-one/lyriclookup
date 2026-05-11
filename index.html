@@ -34,10 +34,14 @@
       required
     />
     <button id="search" onclick="searchSong()">Search</button>
+    <div id="lyric"></div>
     <script>
       async function searchSong() {
         const title = await getTitle();
         const lyric = await getLyric(title);
+
+        document.getElementById("lyric").innerHTML =
+          "<p>" + lyric.replace(/\n/g, "<br>") + "</p>";
       }
 
       /**
