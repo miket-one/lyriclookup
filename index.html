@@ -15,24 +15,22 @@
       size="30"
       required
     />
-    <button id="search">Search</button>
+    <button id="search" onclick="searchSong()">Search</button>
     <script>
-      document.getElementById("search").addEventListener(
-        "click",
-        /**
-         * Get title of YouTube video from noembed API
-         */
-        async function getTitle() {
-          const url = document.getElementById("url").value;
+      async function searchSong() {
+        const title = await getTitle();
+      }
 
-          fetch(`https://noembed.com/embed?dataType=json&url=${url}`)
-            .then((response) => response.json())
-            .then((data) => {
-              const title = data.title;
-              console.log(title);
-            });
-        },
-      );
+      /**
+       * Get title of YouTube video from noembed API
+       */
+      async function getTitle() {
+        const url = document.getElementById("url").value;
+
+        return fetch(`https://noembed.com/embed?dataType=json&url=${url}`)
+          .then((response) => response.json())
+          .then((data) => data.title);
+      }
     </script>
   </body>
 </html>
