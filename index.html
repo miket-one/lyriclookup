@@ -1,6 +1,32 @@
 <!doctype html>
 <html>
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      .container {
+        display: flex;
+        flex-direction: row;
+        height: 100vh;
+      }
+
+      .video-player {
+        flex: 1;
+        min-width: 50%;
+      }
+
+      .lyric-display {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+      }
+
+      @media (max-width: 420px) {
+        .container {
+          flex-direction: column;
+        }
+      }
+    </style>
     <title>lyriclookup</title>
     <link
       rel="apple-touch-icon"
@@ -34,8 +60,10 @@
       required
     />
     <button id="search" onclick="searchSong()">Search</button>
-    <div id="video"></div>
-    <div id="lyric"></div>
+    <div class="container">
+      <div class="video-player" id="video"></div>
+      <div class="lyric-display" id="lyric"></div>
+    </div>
     <script>
       async function searchSong() {
         const yt_url = new URL(document.getElementById("url").value);
@@ -46,8 +74,8 @@
         const lyric = await getLyric(title);
 
         // Insert iframe of YouTube video
-        const container = document.getElementById("video");
-        container.innerHTML = `<iframe src="https://corsproxy.io/?url=https://www.youtube.com/embed/${videoID}"></iframe>`;
+        const container = document.getElementById("video-player");
+        container.innerHTML = `<iframe width="100%" height="100%" src="https://corsproxy.io/?url=https://www.youtube.com/embed/${videoID}" frameborder="0"></iframe>`;
 
         //Print out lyrics
         document.getElementById("lyric").innerHTML =
