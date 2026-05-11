@@ -17,9 +17,22 @@
     />
     <button id="search">Search</button>
     <script>
-      document
-        .getElementById("search")
-        .addEventListener("click", async function getTitle() {});
+      document.getElementById("search").addEventListener(
+        "click",
+        /**
+         * Get title of YouTube video from noembed API
+         */
+        async function getTitle() {
+          const url = document.getElementById("url").value;
+
+          fetch(`https://noembed.com/embed?dataType=json&url=${url}`)
+            .then((response) => response.json())
+            .then((data) => {
+              const title = data.title;
+              console.log(title);
+            });
+        },
+      );
     </script>
   </body>
 </html>
