@@ -51,17 +51,21 @@
   <body>
     <header>
       <h1>lyriclookup</h1>
-      <p>Paste a youtube link to request for song lyric</p>
-      <input
-        type="url"
-        name="url"
-        id="url"
-        placeholder="https://youtube.com/"
-        pattern="https://youtube.com/*"
-        size="30"
-        required
-      />
-      <button id="search" onclick="searchSong()">Search</button>
+      <form>
+        <label for="url"
+          >Enter a YouTube link to request lyrics of its song:</label
+        >
+        <input
+          type="url"
+          name="url"
+          id="url"
+          placeholder="https://youtube.com/"
+          pattern="https://youtube.com/*"
+          size="30"
+          required
+        />
+        <button id="search" onclick="searchSong()">Search</button>
+      </form>
     </header>
     <div class="container">
       <div class="video-player" id="video"></div>
