@@ -19,6 +19,7 @@
     <script>
       async function searchSong() {
         const title = await getTitle();
+        getLyric(title);
       }
 
       /**
@@ -30,6 +31,21 @@
         return fetch(`https://noembed.com/embed?dataType=json&url=${url}`)
           .then((response) => response.json())
           .then((data) => data.title);
+      }
+
+      /**
+       * Search LRCLIB API via song title and return lyric
+       */
+      function getLyric(title) {
+        // Convert song title to URI
+        const queryValue = encodeURIComponent(title).replace(/%20/g, "+");
+
+        fetch(`https://lrclib.net/api/search?q=${queryValue}`)
+          .then((response) => response.json())
+          .then((data) => {
+            const lyric = data[0].plainLyrics;
+            console.log(lyric);
+          });
       }
     </script>
   </body>
