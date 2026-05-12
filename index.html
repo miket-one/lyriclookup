@@ -8,8 +8,24 @@
       rel="stylesheet"
     />
     <style>
+      :root {
+        --bg: #ffffff;
+        --text: #0b0b0b;
+        --primary: #bb44bc;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #171819;
+          --text: #e6eef8;
+          --primary: #bb44bc;
+        }
+      }
+      html,
       body {
         font-family: "Oswald", sans-serif;
+        background: var(--bg);
+        color: var(--text);
       }
 
       label {
