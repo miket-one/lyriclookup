@@ -43,3 +43,25 @@ function getLyric(title) {
       return data[0].plainLyrics;
     });
 }
+
+/**
+ * Get song metadata via MusicBrainz API search.
+ * @param {string} title
+ * @returns {Object} song metadata
+ */
+function getMetadata(title) {
+  return fetch(
+    `https://musicbrainz.org/ws/2/recording?fmt=json&dismax=true&limit=1&query=${title}`,
+    {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+      },
+    },
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data.recordings);
+      return data.recordings;
+    });
+}
