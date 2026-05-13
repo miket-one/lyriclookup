@@ -40,11 +40,19 @@
       }
 
       .video-player {
-        flex: 1;
-        min-width: 60%;
+        flex: 2;
         padding: 20px;
       }
 
+      .metadata-display {
+        flex: 1;
+      }
+
+      .left-column {
+        display: flex;
+        flex-direction: column;
+        width: 60%;
+      }
       .lyric-display {
         flex: 1;
         padding: 20px;
@@ -97,7 +105,10 @@
       </form>
     </header>
     <div class="container">
-      <div class="video-player" id="video"></div>
+      <div class="left-column">
+        <div class="video-player" id="video"></div>
+        <div class="metadata-display"></div>
+      </div>
       <div class="lyric-display" id="lyric"></div>
     </div>
     <script src="script.js"></script>
