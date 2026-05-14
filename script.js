@@ -49,9 +49,11 @@ function getLyric(title) {
  * @param {string} title
  * @returns {Object} song metadata
  */
-function getMetadata(title) {
-  return fetch(
-    `https://musicbrainz.org/ws/2/recording?fmt=json&dismax=true&limit=1&query=${title}`,
+async function getMetadata(title) {
+  const formattedTitle = title.replace(/\(.*?\)/g, "");
+
+  const masterId = await fetch(
+    `https://api.discogs.com/database/search?q=${formattedTitle}`,
     {
       headers: {
         "User-Agent":
@@ -61,8 +63,20 @@ function getMetadata(title) {
   )
     .then((response) => response.json())
     .then((data) => {
-      console.log(data.recordings);
-      return data.recordings;
+      console.log("master_id: " + data.results[0].master_id);
+      return data.results[0].master_id;
+    });
+
+  await fetch(`https://api.discogs.com/masters/${masterId}`, {
+    headers: {
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      return data;
     });
 }
 
