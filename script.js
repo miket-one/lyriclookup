@@ -65,3 +65,13 @@ function getMetadata(title) {
       return data.recordings;
     });
 }
+
+/**
+ * Set background as blurred song cover art.
+ */
+function setBackgroundImage(mbid) {
+  const backgroundDiv = document.getElementById("background");
+  const imageUrl = `https://coverartarchive.org/release/${mbid}/front`;
+
+  backgroundDiv.style.backgroundImage = imageUrl;
+}
