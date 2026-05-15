@@ -13,6 +13,13 @@ async function searchSong() {
   //Print out lyrics
   document.getElementById("lyric").innerHTML =
     "<p>" + lyric.replace(/\n/g, "<br>") + "</p>";
+
+  // Print out metadata
+  let metadata;
+  getMetadata("title").then((data) => {
+    metadata = data;
+    displayMetadata(metadata);
+  });
 }
 
 /**
@@ -107,6 +114,57 @@ async function getMetadata(title) {
   } catch (error) {
     console.error("An error occurred:", error.message);
   }
+}
+
+async function displayMetadata(metadata) {
+  let title = metadata.title;
+  console.log(`Title: ${title}`);
+
+  let artists = [];
+  for (artist in metadata.artists) {
+    artists.push(metadata.artists[artist].name);
+  }
+  console.log(`Artist: ${artists.join(", ")}`);
+
+  let labels = [];
+  for (label in metadata.labels) {
+    labels.push(metadata.labels[label].name);
+  }
+  console.log(`Label: ${labels.join(", ")}`);
+
+  let release = metadata.released;
+  console.log(`Released: ${release}`);
+
+  let genres = [];
+  for (genre in metadata.genres) {
+    genres.push(metadata.genres[genre]);
+  }
+  console.log(`Genre: ${genres.join(", ")}`);
+
+  let styles = [];
+  for (style in metadata.styles) {
+    styles.push(metadata.styles[style]);
+  }
+  console.log(`Style: ${styles.join(", ")}`);
+
+  let extraArtists = [];
+  for (artist in metadata.extraartists) {
+    extraArtists.push(
+      `${metadata.extraartists[artist].role} – ${metadata.extraartists[artist].name}`,
+    );
+  }
+  console.log(`Credits: ${extraArtists.join("\n")}`);
+
+  document.getElementById("metadata").innerHTML =
+    `<p style="white-space: pre-line;">
+    Title: ${title}
+    Artist: ${artists.join(", ")}
+    Label: ${labels.join(", ")}
+    Released: ${release}
+    Genre: ${genres.join(", ")}
+    Style: ${styles.join(", ")}
+    Credits: ${extraArtists.join("\n")}
+    </p>`;
 }
 
 /**
