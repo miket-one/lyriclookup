@@ -50,34 +50,62 @@ function getLyric(title) {
  * @returns {Object} song metadata
  */
 async function getMetadata(title) {
-  const formattedTitle = title.replace(/\(.*?\)/g, "");
+  const formattedTitle = title.replace(/\(.*?\)/g, "").trim();
 
-  const masterId = await fetch(
-    `https://api.discogs.com/database/search?q=${formattedTitle}`,
-    {
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-      },
-    },
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("master_id: " + data.results[0].master_id);
-      return data.results[0].master_id;
-    });
+  try {
+    // Search for song master_id via title / artist name
+    const searchResponse = await fetch(
+      `https://api.discogs.com/database/search?q=${encodeURIComponent(formattedTitle)}`,
+    );
 
-  await fetch(`https://api.discogs.com/masters/${masterId}`, {
-    headers: {
-      "User-Agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      return data;
-    });
+    if (!searchResponse.ok) {
+      throw new Error(
+        `Error fetching search results: ${searchResponse.status}`,
+      );
+    }
+
+    const searchData = await searchResponse.json();
+    const masterId = searchData.results[0]?.master_id;
+
+    if (!masterId) {
+      throw new Error("Master ID does not exist.");
+    }
+    console.log(masterId);
+    // Get main_release
+    const masterIdResponse = await fetch(
+      `https://api.discogs.com/masters/${masterId}`,
+    );
+
+    if (!masterIdResponse.ok) {
+      throw new Error(`Error fetching master data: ${masterIdResponse.status}`);
+    }
+
+    const masterData = await masterIdResponse.json();
+    const mainRelease = masterData.main_release;
+
+    if (!mainRelease) {
+      throw new Error("Main release does not exist.");
+    }
+
+    // Get and return song release metadata
+    const releaseResponse = await fetch(
+      `https://api.discogs.com/releases/${mainRelease}`,
+    );
+
+    if (!releaseResponse.ok) {
+      throw new Error(`Error fetching release data: ${releaseResponse.status}`);
+    }
+
+    const releaseData = await releaseResponse.json();
+
+    if (!releaseData) {
+      throw new Error("Song metadata does not exist.");
+    }
+
+    return releaseData;
+  } catch (error) {
+    console.error("An error occurred:", error.message);
+  }
 }
 
 /**
