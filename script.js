@@ -24,8 +24,9 @@ async function getTitle() {
   return fetch(`https://noembed.com/embed?dataType=json&url=${url}`)
     .then((response) => response.json())
     .then((data) => {
-      console.log(`Title: ${data.title}`);
-      return data.title;
+      const formattedTitle = data.title.replace(/\(.*?\)/g, "").trim();
+      console.log(`Title: ${formattedTitle}`);
+      return formattedTitle;
     });
 }
 
