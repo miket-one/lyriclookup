@@ -16,7 +16,7 @@ async function searchSong() {
 
   // Print out metadata
   let metadata;
-  getMetadata("title").then((data) => {
+  getMetadata(title).then((data) => {
     metadata = data;
     displayMetadata(metadata);
   });
