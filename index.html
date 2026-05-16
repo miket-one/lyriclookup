@@ -65,6 +65,10 @@
           flex-direction: column;
         }
       }
+
+      .hidden {
+        display: none;
+      }
     </style>
     <title>lyriclookup</title>
     <link
@@ -90,18 +94,32 @@
     <header>
       <h1>lyriclookup</h1>
       <form>
-        <label for="url"
-          >Enter a YouTube link to request lyrics of its song:</label
-        >
-        <input
-          type="url"
-          name="url"
-          id="url"
-          placeholder="https://youtube.com/"
-          pattern="https://youtube.com/*"
-          size="30"
-          required
-        />
+        <label for="input-type">Search song via:</label>
+        <select id="input-type" onchange="toggleInputFields()">
+          <option value="url">YouTube URL</option>
+          <option value="release-and-artist">Release & Artist</option>
+        </select>
+        <div id="url-input" class="inputField">
+          <label for="url">Enter URL:</label>
+          <input
+            type="url"
+            id="url"
+            placeholder="https://youtube.com/"
+            pattern="https://youtube.com/*"
+            size="30"
+            required
+          />
+        </div>
+        <div id="song-artist-name-input" class="inputField hidden">
+          <label for="song-artist-name">Enter song and artist name:</label>
+          <input
+            type="text"
+            id="song-artist-name"
+            placeholder="Song title - Artist name"
+            size="30"
+            required
+          />
+        </div>
         <button id="search" onclick="searchSong()">Search</button>
       </form>
     </header>

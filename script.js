@@ -1,3 +1,17 @@
+function toggleInputFields() {
+  const inputType = document.getElementById("input-type").value;
+  const urlInput = document.getElementById("url-input");
+  const songArtistNameInput = document.getElementById("song-artist-name-input");
+
+  if (inputType === "url") {
+    urlInput.classList.remove("hidden");
+    songArtistNameInput.classList.add("hidden");
+  } else {
+    urlInput.classList.add("hidden");
+    songArtistNameInput.classList.remove("hidden");
+  }
+}
+
 async function searchSong() {
   const yt_url = new URL(document.getElementById("url").value);
   const videoID = new URLSearchParams(yt_url.search).get("v");
