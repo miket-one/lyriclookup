@@ -157,14 +157,14 @@ async function displayMetadata(metadata) {
 
   document.getElementById("metadata").innerHTML =
     `<p style="white-space: pre-line;">
-    Title: ${title}
-    Artist: ${artists.join(", ")}
-    Label: ${labels.join(", ")}
-    Released: ${release}
-    Genre: ${genres.join(", ")}
-    Style: ${styles.join(", ")}
-    Credits: ${extraArtists.join("\n")}
-    </p>`;
+    ${title ? `Title: ${title}\n` : ""}
+    ${artists.length > 0 ? `Artist: ${artists.join(", ")}\n` : ""}
+    ${labels.length > 0 ? `Label: ${labels.join(", ")}\n` : ""}
+    ${release ? `Released: ${release}\n` : ""}
+    ${genres.length > 0 ? `Genre: ${genres.join(", ")}\n` : ""}
+    ${styles.length > 0 ? `Style: ${styles.join(", ")}\n` : ""}
+    ${extraArtists.length > 0 ? `Credits: ${extraArtists.join("\n")}` : ""}
+  </p>`;
 }
 
 /**
