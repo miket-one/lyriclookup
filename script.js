@@ -3,7 +3,7 @@ async function searchSong() {
   const videoID = new URLSearchParams(yt_url.search).get("v");
   console.log(videoID);
 
-  const title = await getTitle();
+  const title = await getTitleByYoutubeUrl();
   const lyric = await getLyric(title);
 
   // Insert iframe of YouTube video
@@ -25,7 +25,7 @@ async function searchSong() {
 /**
  * Get title of YouTube video from noembed API
  */
-async function getTitle() {
+async function getTitleByYoutubeUrl() {
   const url = document.getElementById("url").value;
 
   return fetch(`https://noembed.com/embed?dataType=json&url=${url}`)
