@@ -86,10 +86,7 @@ function getLyric(title, artist = null) {
  * Get song metadata via discogs API search via song title and artist name.
  * @returns {Object} song metadata
  */
-async function getMetadataBySongAndArtist() {
-  const title = document.getElementById("song-title").value;
-  const artist = document.getElementById("artist-name").value;
-
+async function getMetadataBySongAndArtist(title, artist) {
   try {
     // Get master URL
     let master_url;
