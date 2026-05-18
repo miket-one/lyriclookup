@@ -67,7 +67,7 @@ function getLyric(title) {
 }
 
 /**
- * Get song metadata via MusicBrainz API search.
+ * Get song metadata via discogs API search.
  * @param {string} title
  * @returns {Object} song metadata
  */
