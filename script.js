@@ -66,6 +66,33 @@ function getLyric(title) {
     });
 }
 
+async function getMetadataBySongAndArtist() {
+  const title = document.getElementById("song-title").value;
+  const artist = document.getElementById("artist-name").value;
+
+  try {
+    // Get master URL
+    let master_url;
+    await fetch(
+      `https://api.discogs.com/database/search?release_title=${title}&artist=${artist}&type=master&per_page=1&page=1`,
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        master_url = data.results[0].master_url;
+      });
+
+    // Get and return song metadata object
+    await fetch(master_url)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 /**
  * Get song metadata via discogs API search.
  * @param {string} title
