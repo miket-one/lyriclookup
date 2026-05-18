@@ -52,16 +52,34 @@ async function getTitleByYoutubeUrl(url) {
 /**
  * Search LRCLIB API via song title and return lyric
  */
-function getLyric(title) {
-  // Convert song title to URI
-  const queryValue = encodeURIComponent(title).replace(/%20/g, "+");
-
-  return fetch(`https://lrclib.net/api/search?q=${queryValue}`)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(`Lyric: ${data[0].plainLyrics}`);
-      return data[0].plainLyrics;
-    });
+function getLyric(title, artist = null) {
+  try {
+    if (artist !== null) {
+      return fetch(
+        `https://lrclib.net/api/get?track_name=${title}&artist_name=${artist}`,
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          if (!data.plainLyrics) {
+            throw new Error(`No lyrics found: ${title} ${artist}`);
+          }
+          console.log(`Lyric: ${data.plainLyrics}`);
+          return data.plainLyrics;
+        });
+    } else {
+      return fetch(`https://lrclib.net/api/search?track_name=${title}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (!data.plainLyrics) {
+            throw new Error(`No lyrics found: ${title}`);
+          }
+          console.log(`Lyric: ${data[0].plainLyrics}`);
+          return data[0].plainLyrics;
+        });
+    }
+  } catch (error) {
+    console.error("An error occurred:", error.message);
+  }
 }
 
 /**
