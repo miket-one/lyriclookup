@@ -98,7 +98,8 @@ async function getMetadataBySongAndArtist() {
  * @param {string} title
  * @returns {Object} song metadata
  */
-async function getMetadata(title) {
+async function getMetadataByYoutubeUrl(title) {
+  // Format title to reduce search mismatch
   const formattedTitle = title.replace(/\(.*?\)/g, "").trim();
 
   try {
@@ -130,28 +131,12 @@ async function getMetadata(title) {
     }
 
     const masterData = await masterIdResponse.json();
-    const mainRelease = masterData.main_release;
 
-    if (!mainRelease) {
+    if (!masterData) {
       throw new Error("Main release does not exist.");
     }
 
-    // Get and return song release metadata
-    const releaseResponse = await fetch(
-      `https://api.discogs.com/releases/${mainRelease}`,
-    );
-
-    if (!releaseResponse.ok) {
-      throw new Error(`Error fetching release data: ${releaseResponse.status}`);
-    }
-
-    const releaseData = await releaseResponse.json();
-
-    if (!releaseData) {
-      throw new Error("Song metadata does not exist.");
-    }
-
-    return releaseData;
+    return masterData;
   } catch (error) {
     console.error("An error occurred:", error.message);
   }
