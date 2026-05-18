@@ -70,7 +70,7 @@ function getLyric(title, artist = null) {
       return fetch(`https://lrclib.net/api/search?track_name=${title}`)
         .then((response) => response.json())
         .then((data) => {
-          if (!data.plainLyrics) {
+          if (!data[0].plainLyrics) {
             throw new Error(`No lyrics found: ${title}`);
           }
           console.log(`Lyric: ${data[0].plainLyrics}`);
