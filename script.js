@@ -6,13 +6,20 @@ function toggleInputFields() {
   if (inputType === "url") {
     urlInput.classList.remove("hidden");
     songArtistNameInput.classList.add("hidden");
+    document.getElementById("url").required = true;
+    document.getElementById("title-input").required = false;
+    document.getElementById("artist-input").required = false;
   } else {
     urlInput.classList.add("hidden");
     songArtistNameInput.classList.remove("hidden");
+    document.getElementById("url").required = false;
+    document.getElementById("title-input").required = true;
+    document.getElementById("artist-input").required = true;
   }
 }
 
-async function searchSong() {
+async function searchSong(event) {
+  event.preventDefault();
   const inputType = document.getElementById("input-type").value;
 
   let title, artist, ytUrl, videoID, metadata;
