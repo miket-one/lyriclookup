@@ -52,13 +52,6 @@ async function searchSong() {
   //Print out lyrics
   document.getElementById("lyric").innerHTML =
     "<p>" + lyric.replace(/\n/g, "<br>") + "</p>";
-
-  // Print out metadata
-  let metadata;
-  getMetadata(title).then((data) => {
-    metadata = data;
-    displayMetadata(metadata);
-  });
 }
 
 /**
