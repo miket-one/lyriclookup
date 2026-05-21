@@ -198,15 +198,15 @@ async function displayMetadata(metadata) {
   }
   console.log(`Credits: ${extraArtists.join("\n")}`);
 
-  document.getElementById("metadata").innerHTML =
-    `<p style="white-space: pre-line;">
-    ${title ? `Title: ${title}\n` : ""}
-    ${artists.length > 0 ? `Artist: ${artists.join(", ")}\n` : ""}
-    ${labels.length > 0 ? `Label: ${labels.join(", ")}\n` : ""}
+  document.getElementById("metadata").innerHTML = `
+  <p>
+    ${title ? `Title: ${title}<br>` : ""}
+    ${artists.length > 0 ? `Artist: ${artists.join(", ")}<br>` : ""}
+    ${labels.length > 0 ? `Label: ${labels.join(", ")}<br>` : ""}
     ${release ? `Released: ${release}\n` : ""}
-    ${genres.length > 0 ? `Genre: ${genres.join(", ")}\n` : ""}
-    ${styles.length > 0 ? `Style: ${styles.join(", ")}\n` : ""}
-    ${extraArtists.length > 0 ? `Credits: ${extraArtists.join("\n")}` : ""}
+    ${genres.length > 0 ? `Genre: ${genres.join(", ")}<br>` : ""}
+    ${styles.length > 0 ? `Style: ${styles.join(", ")}<br>` : ""}
+    ${extraArtists.length > 0 ? `Credits: ${extraArtists.join(", ")}` : ""}
   </p>`;
 }
 
