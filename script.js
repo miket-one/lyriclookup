@@ -64,6 +64,9 @@ function getTitleByYoutubeUrl(url) {
       const formattedTitle = data.title.replace(/\(.*?\)/g, "").trim();
       console.log(`Title: ${formattedTitle}`);
       return formattedTitle;
+    })
+    .catch((error) => {
+      console.error("Error fetching title:", error);
     });
 }
 
