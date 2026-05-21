@@ -9,16 +9,31 @@
     />
     <style>
       :root {
-        --bg: #ffffff;
-        --text: #0b0b0b;
+        --bg: #131415;
+        --text: #e6eef8;
         --primary: #bb44bc;
       }
 
       html,
       body {
         font-family: "Oswald", sans-serif;
-        background: var(--bg);
         color: var(--text);
+      }
+
+      .bg-image {
+        position: absolute;
+        inset: 0;
+        background-color: var(--bg);
+        background-size: cover;
+        background-position: center;
+        filter: blur(10px) saturate(30%);
+        transform: scale(1.05); /* hide edge artifacts from blur */
+        will-change: transform, filter;
+        z-index: -1;
+      }
+
+      .content {
+        z-index: 1;
       }
 
       label {
@@ -84,52 +99,55 @@
     <link rel="manifest" href="favicon/site.webmanifest" />
   </head>
   <body>
-    <header>
-      <h1>lyriclookup</h1>
-      <form>
-        <label for="input-type">Search song via:</label>
-        <select id="input-type" onchange="toggleInputFields()">
-          <option value="url">YouTube URL</option>
-          <option value="release-and-artist">Release & Artist</option>
-        </select>
-        <div id="url-input" class="inputField">
-          <label for="url">Enter URL:</label>
-          <input
-            type="url"
-            id="url"
-            placeholder="https://youtube.com/"
-            pattern="https://youtube.com/*"
-            size="30"
-            required
-          />
+    <div class="bg-image"></div>
+    <div class="content">
+      <header>
+        <h1>lyriclookup</h1>
+        <form>
+          <label for="input-type">Search song via:</label>
+          <select id="input-type" onchange="toggleInputFields()">
+            <option value="url">YouTube URL</option>
+            <option value="release-and-artist">Release & Artist</option>
+          </select>
+          <div id="url-input" class="inputField">
+            <label for="url">Enter URL:</label>
+            <input
+              type="url"
+              id="url"
+              placeholder="https://youtube.com/"
+              pattern="https://youtube.com/*"
+              size="30"
+              required
+            />
+          </div>
+          <div id="song-artist-name-input" class="inputField hidden">
+            <label for="song-title">Enter song title:</label>
+            <input
+              type="text"
+              id="title-input"
+              placeholder="Hello"
+              size="20"
+              required
+            />
+            <label for="artist-name">artist name:</label>
+            <input
+              type="text"
+              id="artist-input"
+              placeholder="Adele"
+              size="20"
+              required
+            />
+          </div>
+          <button id="search" onclick="searchSong()">Search</button>
+        </form>
+      </header>
+      <div class="container">
+        <div class="left-column">
+          <div class="video-player" id="video"></div>
+          <div class="metadata-display" id="metadata"></div>
         </div>
-        <div id="song-artist-name-input" class="inputField hidden">
-          <label for="song-title">Enter song title:</label>
-          <input
-            type="text"
-            id="title-input"
-            placeholder="Hello"
-            size="20"
-            required
-          />
-          <label for="artist-name">artist name:</label>
-          <input
-            type="text"
-            id="artist-input"
-            placeholder="Adele"
-            size="20"
-            required
-          />
-        </div>
-        <button id="search" onclick="searchSong()">Search</button>
-      </form>
-    </header>
-    <div class="container">
-      <div class="left-column">
-        <div class="video-player" id="video"></div>
-        <div class="metadata-display" id="metadata"></div>
+        <div class="lyric-display" id="lyric"></div>
       </div>
-      <div class="lyric-display" id="lyric"></div>
     </div>
     <script src="script.js"></script>
   </body>

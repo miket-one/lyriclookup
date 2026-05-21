@@ -27,6 +27,7 @@ async function searchSong() {
 
     // Get and print metadata
     await getMetadataByYoutubeUrl(title).then((data) => {
+      setBackgroundImage(data.images[0].uri);
       displayMetadata(data);
     });
   } else // Search via song and artist name
@@ -39,6 +40,7 @@ async function searchSong() {
       ytUrl = new URL(data.videos[0].uri);
       videoID = ytUrl.searchParams.get("v");
 
+      setBackgroundImage(data.images[0].uri);
       displayMetadata(data);
     });
   }
@@ -242,9 +244,7 @@ async function displayMetadata(metadata) {
 /**
  * Set background as blurred song cover art.
  */
-function setBackgroundImage(mbid) {
-  const backgroundDiv = document.getElementById("background");
-  const imageUrl = `https://coverartarchive.org/release/${mbid}/front`;
-
-  backgroundDiv.style.backgroundImage = imageUrl;
+function setBackgroundImage(imageUrl) {
+  const backgroundDiv = document.querySelector(".bg-image");
+  backgroundDiv.style.backgroundImage = `url('${imageUrl}')`;
 }
