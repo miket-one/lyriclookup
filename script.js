@@ -43,13 +43,13 @@ async function searchSong() {
     });
   }
 
-  const lyric = await getLyric(title, artist);
-
   // Insert iframe of YouTube video
   const container = document.getElementById("video");
   container.innerHTML = `<iframe width="100%" height="100%" src="https://corsproxy.io/?url=https://www.youtube.com/embed/${videoID}" frameborder="0"></iframe>`;
 
   //Print out lyrics
+  const lyric = await getLyric(title, artist);
+
   document.getElementById("lyric").innerHTML =
     "<p>" + lyric.replace(/\n/g, "<br>") + "</p>";
 }
