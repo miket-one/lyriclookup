@@ -57,7 +57,7 @@ async function searchSong() {
 /**
  * Get title of YouTube video from noembed API
  */
-async function getTitleByYoutubeUrl(url) {
+function getTitleByYoutubeUrl(url) {
   return fetch(`https://noembed.com/embed?dataType=json&url=${url}`)
     .then((response) => response.json())
     .then((data) => {
