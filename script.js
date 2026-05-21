@@ -89,24 +89,32 @@ function getLyric(title, artist = null) {
 async function getMetadataBySongAndArtist(title, artist) {
   try {
     // Get master URL
-    let master_url;
-    await fetch(
+    const response = await fetch(
       `https://api.discogs.com/database/search?release_title=${title}&artist=${artist}&type=master&per_page=1&page=1`,
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        master_url = data.results[0].master_url;
-      });
+    );
+
+    if (!response.ok) {
+      throw new Error(`Error fetching master URL: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const master_url = data.results[0]?.master_url;
+
+    if (!master_url) {
+      throw new Error("Master URL not found");
+    }
 
     // Get and return song metadata object
-    await fetch(master_url)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        return data;
-      });
+    const metadataResponse = await fetch(master_url);
+
+    if (!metadataResponse.ok) {
+      throw new Error(`Error fetching metadata: ${metadataResponse.status}`);
+    }
+
+    const metadataData = await metadataResponse.json();
+    return metadataData;
   } catch (error) {
-    console.log(error);
+    console.error("An error occurred:", error.message);
   }
 }
 
