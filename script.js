@@ -13,12 +13,37 @@ function toggleInputFields() {
 }
 
 async function searchSong() {
-  const yt_url = new URL(document.getElementById("url").value);
-  const videoID = new URLSearchParams(yt_url.search).get("v");
-  console.log(videoID);
+  const inputType = document.getElementById("input-type").value;
 
-  const title = await getTitleByYoutubeUrl();
-  const lyric = await getLyric(title);
+  let title, artist, ytUrl, videoID, metadata;
+  if (
+    // Search via YouTube URL
+    inputType === "url"
+  ) {
+    ytUrl = new URL(document.getElementById("url").value);
+    videoID = ytUrl.searchParams.get("v");
+
+    title = await getTitleByYoutubeUrl(ytUrl);
+
+    // Get and print metadata
+    await getMetadataByYoutubeUrl(title).then((data) => {
+      displayMetadata(data);
+    });
+  } else // Search via song and artist name
+  {
+    title = document.getElementById("title-input").value;
+    artist = document.getElementById("artist-input").value;
+
+    // Get and print metadata
+    await getMetadataBySongAndArtist(title, artist).then((data) => {
+      ytUrl = new URL(data.videos[0].uri);
+      videoID = ytUrl.searchParams.get("v");
+
+      displayMetadata(data);
+    });
+  }
+
+  const lyric = await getLyric(title, artist);
 
   // Insert iframe of YouTube video
   const container = document.getElementById("video");
