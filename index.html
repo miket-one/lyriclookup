@@ -18,23 +18,18 @@
       body {
         font-family: "Oswald", sans-serif;
         color: var(--text);
+        margin: 0;
         height: 100%;
       }
 
-      .bg-image {
-        position: absolute;
-        inset: 0;
+      .content {
+        /* inset: 0; */
         background-color: var(--bg);
         background-size: cover;
+        background-attachment: fixed;
         background-position: center;
-        filter: blur(10px) saturate(30%);
-        transform: scale(1.05); /* hide edge artifacts from blur */
-        will-change: transform, filter;
-        z-index: -1;
-      }
-
-      .content {
-        z-index: 1;
+        background-repeat: none;
+        backdrop-filter: blur(3px) saturate(30%);
       }
 
       label {
@@ -121,7 +116,6 @@
     <link rel="manifest" href="favicon/site.webmanifest" />
   </head>
   <body>
-    <div class="bg-image"></div>
     <div class="content">
       <header>
         <h1>lyriclookup</h1>
@@ -170,7 +164,7 @@
         </div>
         <div class="lyric-display" id="lyric"></div>
       </div>
+      <script src="script.js"></script>
     </div>
-    <script src="script.js"></script>
   </body>
 </html>

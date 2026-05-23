@@ -252,6 +252,6 @@ async function displayMetadata(metadata) {
  * Set background as blurred song cover art.
  */
 function setBackgroundImage(imageUrl) {
-  const backgroundDiv = document.querySelector(".bg-image");
+  const backgroundDiv = document.querySelector(".content");
   backgroundDiv.style.backgroundImage = `url('${imageUrl}')`;
 }
