@@ -22,7 +22,7 @@ async function searchSong(event) {
   event.preventDefault();
   const inputType = document.getElementById("input-type").value;
 
-  let title, artist, ytUrl, videoID, metadata;
+  let title, artist, ytUrl, videoID, artistMetadata;
   if (
     // Search via YouTube URL
     inputType === "url"
@@ -33,9 +33,11 @@ async function searchSong(event) {
     title = await getTitleByYoutubeUrl(ytUrl);
 
     // Get and print metadata
-    await getMetadataByYoutubeUrl(title).then((data) => {
+    await getMetadataByYoutubeUrl(title).then(async (data) => {
       setBackgroundImage(data.images[0].uri);
-      displayMetadata(data);
+
+      artistMetadata = await getArtistMetadata(data.artists[0].id);
+      displayMetadata(data, artistMetadata);
     });
   } else // Search via song and artist name
   {
@@ -43,12 +45,14 @@ async function searchSong(event) {
     artist = document.getElementById("artist-input").value;
 
     // Get and print metadata
-    await getMetadataBySongAndArtist(title, artist).then((data) => {
+    await getMetadataBySongAndArtist(title, artist).then(async (data) => {
       ytUrl = new URL(data.videos[0].uri);
       videoID = ytUrl.searchParams.get("v");
 
       setBackgroundImage(data.images[0].uri);
-      displayMetadata(data);
+
+      artistMetadata = await getArtistMetadata(data.artists[0].id);
+      displayMetadata(data, artistMetadata);
     });
   }
 
@@ -197,7 +201,35 @@ async function getMetadataByYoutubeUrl(title) {
   }
 }
 
-async function displayMetadata(metadata) {
+/**
+ * Artist metadata via artist id.
+ * @returns {Object} artist metadata
+ */
+async function getArtistMetadata(artistId) {
+  try {
+    const artistResponse = await fetch(
+      `https://api.discogs.com/artists/${artistId}`,
+    );
+
+    if (!artistResponse.ok) {
+      throw new Error(
+        `Error fetching artist results: ${artistResponse.status}`,
+      );
+    }
+
+    const artistData = await artistResponse.json();
+
+    if (!artistData) {
+      throw new Error("Artist does not exist.");
+    }
+
+    return artistData;
+  } catch (error) {
+    console.error("An error occurred:", error.message);
+  }
+}
+
+async function displayMetadata(metadata, artistMetadata = null) {
   let title = metadata.title;
   console.log(`Title: ${title}`);
 
@@ -244,7 +276,10 @@ async function displayMetadata(metadata) {
     ${release ? `Released: ${release}\n` : ""}
     ${genres.length > 0 ? `Genre: ${genres.join(", ")}<br>` : ""}
     ${styles.length > 0 ? `Style: ${styles.join(", ")}<br>` : ""}
-    ${extraArtists.length > 0 ? `Credits: ${extraArtists.join(", ")}` : ""}
+    ${extraArtists.length > 0 ? `Credits: ${extraArtists.join(", ")}<br>` : ""}
+    <br>
+    ${artistMetadata.realname ? `${artistMetadata.realname} - ` : ""}
+    ${artistMetadata.profile ? `${artistMetadata.profile}` : ""}
   </p>`;
 }
 
