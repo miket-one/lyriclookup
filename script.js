@@ -92,6 +92,8 @@ function getTitleByYoutubeUrl(url) {
  * Search LRCLIB API via song title and return lyric
  */
 function getLyric(title, artist = null) {
+  let lyric;
+
   try {
     if (artist !== null) {
       return fetch(
@@ -102,8 +104,10 @@ function getLyric(title, artist = null) {
           if (!data.plainLyrics) {
             throw new Error(`No lyrics found: ${title} ${artist}`);
           }
-          console.log(`Lyric: ${data.plainLyrics}`);
-          return data.plainLyrics;
+
+          // Clean lyric
+          lyric = data.plainLyrics.replace(/\[.*?\]/g, "").trim();
+          return lyric;
         });
     } else {
       return fetch(`https://lrclib.net/api/search?track_name=${title}`)
@@ -112,12 +116,14 @@ function getLyric(title, artist = null) {
           if (!data[0].plainLyrics) {
             throw new Error(`No lyrics found: ${title}`);
           }
-          console.log(`Lyric: ${data[0].plainLyrics}`);
-          return data[0].plainLyrics;
+
+          // Clean lyric
+          lyric = data[0].plainLyrics.replace(/\[.*?\]/g, "").trim();
+          return lyric;
         });
     }
   } catch (error) {
-    console.error("An error occurred:", error.message);
+    console.error("An error occurred: ", error.message);
   }
 }
 
