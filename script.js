@@ -1,3 +1,8 @@
+// Set default url on page load
+window.onload = function () {
+  document.getElementById("search").click();
+};
+
 function toggleInputFields() {
   const inputType = document.getElementById("input-type").value;
   const urlInput = document.getElementById("url-input");
