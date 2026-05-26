@@ -25,6 +25,12 @@ function toggleInputFields() {
 
 async function searchSong(event) {
   event.preventDefault();
+  // Reset elements
+  document.getElementById("video").innerHTML = "";
+  document.getElementById("metadata").innerHTML = "";
+  document.getElementById("lyric").innerHTML = "";
+  document.getElementById("content").style.backgroundImage = "none";
+
   const inputType = document.getElementById("input-type").value;
 
   let title, artist, ytUrl, videoID, artistMetadata;
@@ -299,6 +305,6 @@ async function displayMetadata(metadata, artistMetadata = null) {
  * Set background as blurred song cover art.
  */
 function setBackgroundImage(imageUrl) {
-  const backgroundDiv = document.querySelector(".content");
+  const backgroundDiv = document.getElementById("content");
   backgroundDiv.style.backgroundImage = `url('${imageUrl}')`;
 }
