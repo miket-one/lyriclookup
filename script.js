@@ -273,6 +273,7 @@ async function displayMetadata(metadata, artistMetadata = null) {
   }
   console.log(`Credits: ${extraArtists.join("\n")}`);
 
+  const profile = artistMetadata.profile.replace(/\[.*?\]/g, "").trim();
   document.getElementById("metadata").innerHTML = `
   <p>
     ${title ? `Title: ${title}<br>` : ""}
@@ -284,7 +285,7 @@ async function displayMetadata(metadata, artistMetadata = null) {
     ${extraArtists.length > 0 ? `Credits: ${extraArtists.join(", ")}<br>` : ""}
     <br>
     ${artistMetadata.realname ? `${artistMetadata.realname} - ` : ""}
-    ${artistMetadata.profile ? `${artistMetadata.profile}` : ""}
+    ${artistMetadata.profile ? `${profile}` : ""}
   </p>`;
 }
 
