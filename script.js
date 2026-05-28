@@ -84,11 +84,16 @@ async function searchSong(event) {
 function resetElements() {
   document.getElementById("video").innerHTML = "";
   document.getElementById("loading-video").classList.remove("hidden");
-  document.getElementById("loading-video-error").classList.remove("hidden");
+  document.getElementById("loading-video-error").classList.add("hidden");
+
   document.getElementById("metadata").innerHTML = "";
   document.getElementById("loading-metadata").classList.remove("hidden");
+  document.getElementById("loading-metadata-error").classList.add("hidden");
+
   document.getElementById("lyric").innerHTML = "";
   document.getElementById("loading-lyric").classList.remove("hidden");
+  document.getElementById("loading-lyric-error").classList.add("hidden");
+
   document.getElementById("content").style.backgroundImage = "none";
 }
 
