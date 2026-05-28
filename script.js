@@ -179,7 +179,7 @@ async function getTitleByYoutubeUrl(url) {
     }
 
     const formattedTitle = data.title.replace(/\(.*?\)/g, "").trim();
-    console.log(`Title: ${formattedTitle}`);
+
     return formattedTitle;
   } catch (error) {
     console.error("Failed to fetch title:", error);
@@ -300,7 +300,7 @@ async function getMetadataByYoutubeUrl(title) {
     if (!masterId) {
       throw new Error("Master ID does not exist.");
     }
-    console.log(masterId);
+    console.log("Master ID: ", masterId);
     // Get main_release
     const masterIdResponse = await fetch(
       `https://api.discogs.com/masters/${masterId}`,
@@ -358,28 +358,23 @@ async function displayMetadata(metadata, artistMetadata = null) {
   for (artist in metadata.artists) {
     artists.push(metadata.artists[artist].name);
   }
-  console.log(`Artist: ${artists.join(", ")}`);
 
   let labels = [];
   for (label in metadata.labels) {
     labels.push(metadata.labels[label].name);
   }
-  console.log(`Label: ${labels.join(", ")}`);
 
   let release = metadata.released;
-  console.log(`Released: ${release}`);
 
   let genres = [];
   for (genre in metadata.genres) {
     genres.push(metadata.genres[genre]);
   }
-  console.log(`Genre: ${genres.join(", ")}`);
 
   let styles = [];
   for (style in metadata.styles) {
     styles.push(metadata.styles[style]);
   }
-  console.log(`Style: ${styles.join(", ")}`);
 
   let extraArtists = [];
   for (artist in metadata.extraartists) {
@@ -387,7 +382,6 @@ async function displayMetadata(metadata, artistMetadata = null) {
       `${metadata.extraartists[artist].role} – ${metadata.extraartists[artist].name}`,
     );
   }
-  console.log(`Credits: ${extraArtists.join("\n")}`);
 
   const profile = artistMetadata.profile.replace(/\[.*?\]/g, "").trim();
   document.getElementById("metadata").innerHTML = `
