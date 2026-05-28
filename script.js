@@ -71,11 +71,15 @@ async function searchSong(event) {
   const container = document.getElementById("video");
   container.innerHTML = `<iframe width="100%" height="100%" src="https://corsproxy.io/?url=https://www.youtube.com/embed/${videoID}" frameborder="0"></iframe>`;
 
+  document.getElementById("loading-video").classList.add("hidden");
+
   //Print out lyrics
   const lyric = await getLyric(title, artist);
 
   document.getElementById("lyric").innerHTML =
     "<p>" + lyric.replace(/\n/g, "<br>") + "</p>";
+
+  document.getElementById("loading-lyric").classList.add("hidden");
 }
 
 /**
@@ -299,6 +303,8 @@ async function displayMetadata(metadata, artistMetadata = null) {
     ${artistMetadata.realname ? `${artistMetadata.realname} - ` : ""}
     ${artistMetadata.profile ? `${profile}` : ""}
   </p>`;
+
+  document.getElementById("loading-metadata").classList.add("hidden");
 }
 
 /**
