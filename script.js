@@ -29,7 +29,9 @@ async function searchSong(event) {
 
   const inputType = document.getElementById("input-type").value;
 
-  let title, artist, ytUrl, videoID, artistMetadata;
+  let title, artist, ytUrl, videoID, artistMetadata, msg;
+
+  try {
   if (
     // Search via YouTube URL
     inputType === "url"
@@ -38,12 +40,40 @@ async function searchSong(event) {
     videoID = ytUrl.searchParams.get("v");
 
     title = await getTitleByYoutubeUrl(ytUrl);
+      if (!title) {
+        removeLoadingElements();
+        msg = "Failed to load video";
+        document.getElementById("loading-video-error").innerHTML = msg;
+        document
+          .getElementById("loading-video-error")
+          .classList.remove("hidden");
+        throw new Error(msg);
+      }
+
+      insertIframe(videoID);
 
     // Get and print metadata
     await getMetadataByYoutubeUrl(title).then(async (data) => {
+        if (!data) {
+          removeLoadingElements();
+          msg = "Metadata does not exist by YouTube title";
+          document.getElementById("loading-metadata-error").innerHTML = msg;
+          document
+            .getElementById("loading-metadata-error")
+            .classList.remove("hidden");
+          throw new Error(msg);
+        }
+
+        if (data.images[0].uri) {
       setBackgroundImage(data.images[0].uri);
+        }
 
       artistMetadata = await getArtistMetadata(data.artists[0].id);
+        if (!artistMetadata) {
+          msg = "Artist metadata does not exist";
+          console.error(msg);
+        }
+
       displayMetadata(data, artistMetadata);
     });
   } else // Search via song and artist name
@@ -53,26 +83,57 @@ async function searchSong(event) {
 
     // Get and print metadata
     await getMetadataBySongAndArtist(title, artist).then(async (data) => {
+        if (!data) {
+          removeLoadingElements();
+          msg = "Metadata not found by release and artist search";
+          document.getElementById("loading-metadata-error").innerHTML = msg;
+          document
+            .getElementById("loading-metadata-error")
+            .classList.remove("hidden");
+          alert("Release and artist does not exist. Please try a new search");
+          throw new Error(msg);
+        }
+
+        if (!data.videos) {
+          removeLoadingElements();
+          msg = "YouTube video does not exist via discogs";
+          document.getElementById("loading-video-error").innerHTML = msg;
+          document
+            .getElementById("loading-video-error")
+            .classList.remove("hidden");
+          throw new Error(msg);
+        }
+
       ytUrl = new URL(data.videos[0].uri);
       videoID = ytUrl.searchParams.get("v");
 
+        insertIframe(videoID);
+
+        if (data.images[0].uri) {
       setBackgroundImage(data.images[0].uri);
+        }
 
       artistMetadata = await getArtistMetadata(data.artists[0].id);
       displayMetadata(data, artistMetadata);
     });
   }
-
-  // Insert youtube video
-  insertIframe(videoID);
-
-  //Print out lyrics
+    // Get and print lyrics
   const lyric = await getLyric(title, artist);
+    if (!lyric) {
+      removeLoadingElements();
+      msg = "No lyrics found";
+      document.getElementById("loading-lyric-error").innerHTML = msg;
+      document.getElementById("loading-lyric-error").classList.remove("hidden");
+      throw new Error(msg);
+    }
+
+    document.getElementById("loading-lyric").classList.add("hidden");
 
   document.getElementById("lyric").innerHTML =
     "<p>" + lyric.replace(/\n/g, "<br>") + "</p>";
-
-  document.getElementById("loading-lyric").classList.add("hidden");
+  } catch (error) {
+    console.error("An error occured: ", error.stack);
+  }
 }
 
 /**
