@@ -106,17 +106,24 @@ function removeLoadingElements() {
 /**
  * Get title of YouTube video from noembed API
  */
-function getTitleByYoutubeUrl(url) {
-  return fetch(`https://noembed.com/embed?dataType=json&url=${url}`)
-    .then((response) => response.json())
-    .then((data) => {
-      const formattedTitle = data.title.replace(/\(.*?\)/g, "").trim();
-      console.log(`Title: ${formattedTitle}`);
-      return formattedTitle;
-    })
-    .catch((error) => {
-      console.error("Error fetching title:", error);
-    });
+async function getTitleByYoutubeUrl(url) {
+  try {
+    const response = await fetch(
+      `https://noembed.com/embed?dataType=json&url=${url}`,
+    );
+    const data = await response.json();
+
+    if (data.error) {
+      throw new Error(`API Error: ${data.error}`);
+    }
+
+    const formattedTitle = data.title.replace(/\(.*?\)/g, "").trim();
+    console.log(`Title: ${formattedTitle}`);
+    return formattedTitle;
+  } catch (error) {
+    console.error("Failed to fetch title:", error);
+    throw error;
+  }
 }
 
 /**
