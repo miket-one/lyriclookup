@@ -233,8 +233,7 @@ async function getLyric(title, artist = null) {
     // Clean lyrics
     return lyrics.replace(/\[.*?\]/g, "").trim();
   } catch (error) {
-    console.error("An error occurred: ", error.message);
-    throw error;
+    return undefined;
   }
 }
 
