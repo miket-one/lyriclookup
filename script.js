@@ -25,11 +25,7 @@ function toggleInputFields() {
 
 async function searchSong(event) {
   event.preventDefault();
-  // Reset elements
-  document.getElementById("video").innerHTML = "";
-  document.getElementById("metadata").innerHTML = "";
-  document.getElementById("lyric").innerHTML = "";
-  document.getElementById("content").style.backgroundImage = "none";
+  resetElements();
 
   const inputType = document.getElementById("input-type").value;
 
@@ -80,6 +76,20 @@ async function searchSong(event) {
     "<p>" + lyric.replace(/\n/g, "<br>") + "</p>";
 
   document.getElementById("loading-lyric").classList.add("hidden");
+}
+
+/**
+ * Reset HTML elements
+ */
+function resetElements() {
+  document.getElementById("video").innerHTML = "";
+  document.getElementById("loading-video").classList.remove("hidden");
+  document.getElementById("loading-video-error").classList.remove("hidden");
+  document.getElementById("metadata").innerHTML = "";
+  document.getElementById("loading-metadata").classList.remove("hidden");
+  document.getElementById("lyric").innerHTML = "";
+  document.getElementById("loading-lyric").classList.remove("hidden");
+  document.getElementById("content").style.backgroundImage = "none";
 }
 
 /**
