@@ -63,11 +63,8 @@ async function searchSong(event) {
     });
   }
 
-  // Insert iframe of YouTube video
-  const container = document.getElementById("video");
-  container.innerHTML = `<iframe width="100%" height="100%" src="https://corsproxy.io/?url=https://www.youtube.com/embed/${videoID}" frameborder="0"></iframe>`;
-
-  document.getElementById("loading-video").classList.add("hidden");
+  // Insert youtube video
+  insertIframe(videoID);
 
   //Print out lyrics
   const lyric = await getLyric(title, artist);
@@ -111,6 +108,22 @@ function getTitleByYoutubeUrl(url) {
     .catch((error) => {
       console.error("Error fetching title:", error);
     });
+}
+
+/**
+ * Insert iframe of YouTube video
+ */
+function insertIframe(videoID) {
+  try {
+    const container = document.getElementById("video");
+    container.innerHTML = `<iframe width="100%" height="100%" src="https://corsproxy.io/?url=https://www.youtube.com/embed/${videoID}" frameborder="0"></iframe>`;
+
+    document.getElementById("loading-video").classList.add("hidden");
+  } catch (error) {
+    console.error("An error occurred: ", error.message);
+    document.getElementById("loading-video-error").innerHTML = "error";
+    document.getElementById("loading-video-error").classList.remove("hidden");
+  }
 }
 
 /**
