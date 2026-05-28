@@ -32,14 +32,14 @@ async function searchSong(event) {
   let title, artist, ytUrl, videoID, artistMetadata, msg;
 
   try {
-  if (
-    // Search via YouTube URL
-    inputType === "url"
-  ) {
-    ytUrl = new URL(document.getElementById("url").value);
-    videoID = ytUrl.searchParams.get("v");
+    if (
+      // Search via YouTube URL
+      inputType === "url"
+    ) {
+      ytUrl = new URL(document.getElementById("url").value);
+      videoID = ytUrl.searchParams.get("v");
 
-    title = await getTitleByYoutubeUrl(ytUrl);
+      title = await getTitleByYoutubeUrl(ytUrl);
       if (!title) {
         removeLoadingElements();
         msg = "Failed to load video";
@@ -52,8 +52,8 @@ async function searchSong(event) {
 
       insertIframe(videoID);
 
-    // Get and print metadata
-    await getMetadataByYoutubeUrl(title).then(async (data) => {
+      // Get and print metadata
+      await getMetadataByYoutubeUrl(title).then(async (data) => {
         if (!data) {
           removeLoadingElements();
           msg = "Metadata does not exist by YouTube title";
@@ -65,24 +65,24 @@ async function searchSong(event) {
         }
 
         if (data.images[0].uri) {
-      setBackgroundImage(data.images[0].uri);
+          setBackgroundImage(data.images[0].uri);
         }
 
-      artistMetadata = await getArtistMetadata(data.artists[0].id);
+        artistMetadata = await getArtistMetadata(data.artists[0].id);
         if (!artistMetadata) {
           msg = "Artist metadata does not exist";
           console.error(msg);
         }
 
-      displayMetadata(data, artistMetadata);
-    });
-  } else // Search via song and artist name
-  {
-    title = document.getElementById("title-input").value;
-    artist = document.getElementById("artist-input").value;
+        displayMetadata(data, artistMetadata);
+      });
+    } else // Search via song and artist name
+    {
+      title = document.getElementById("title-input").value;
+      artist = document.getElementById("artist-input").value;
 
-    // Get and print metadata
-    await getMetadataBySongAndArtist(title, artist).then(async (data) => {
+      // Get and print metadata
+      await getMetadataBySongAndArtist(title, artist).then(async (data) => {
         if (!data) {
           removeLoadingElements();
           msg = "Metadata not found by release and artist search";
@@ -104,21 +104,21 @@ async function searchSong(event) {
           throw new Error(msg);
         }
 
-      ytUrl = new URL(data.videos[0].uri);
-      videoID = ytUrl.searchParams.get("v");
+        ytUrl = new URL(data.videos[0].uri);
+        videoID = ytUrl.searchParams.get("v");
 
         insertIframe(videoID);
 
         if (data.images[0].uri) {
-      setBackgroundImage(data.images[0].uri);
+          setBackgroundImage(data.images[0].uri);
         }
 
-      artistMetadata = await getArtistMetadata(data.artists[0].id);
-      displayMetadata(data, artistMetadata);
-    });
-  }
+        artistMetadata = await getArtistMetadata(data.artists[0].id);
+        displayMetadata(data, artistMetadata);
+      });
+    }
     // Get and print lyrics
-  const lyric = await getLyric(title, artist);
+    const lyric = await getLyric(title, artist);
     if (!lyric) {
       removeLoadingElements();
       msg = "No lyrics found";
@@ -129,8 +129,8 @@ async function searchSong(event) {
 
     document.getElementById("loading-lyric").classList.add("hidden");
 
-  document.getElementById("lyric").innerHTML =
-    "<p>" + lyric.replace(/\n/g, "<br>") + "</p>";
+    document.getElementById("lyric").innerHTML =
+      "<p>" + lyric.replace(/\n/g, "<br>") + "</p>";
   } catch (error) {
     console.error("An error occured: ", error.stack);
   }
@@ -228,7 +228,7 @@ async function getLyric(title, artist = null) {
       throw new Error(
         `No lyrics found: ${title}${artist ? " by " + artist : ""}`,
       );
-          }
+    }
 
     // Clean lyrics
     return lyrics.replace(/\[.*?\]/g, "").trim();
