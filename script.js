@@ -95,6 +95,15 @@ function resetElements() {
 }
 
 /**
+ * Remove loading messages
+ */
+function removeLoadingElements() {
+  document.getElementById("loading-video").classList.add("hidden");
+  document.getElementById("loading-metadata").classList.add("hidden");
+  document.getElementById("loading-lyric").classList.add("hidden");
+}
+
+/**
  * Get title of YouTube video from noembed API
  */
 function getTitleByYoutubeUrl(url) {
