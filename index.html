@@ -27,7 +27,29 @@
       }
 
       .loading {
-        opacity: 0.6;
+        opacity: 0.7;
+        background: linear-gradient(
+          90deg,
+          var(--text),
+          var(--text),
+          var(--primary),
+          var(--primary),
+          var(--primary)
+        );
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: colorWave 3s linear infinite;
+      }
+
+      @keyframes colorWave {
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
       }
 
       .content {
