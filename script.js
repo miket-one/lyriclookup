@@ -145,39 +145,35 @@ function insertIframe(videoID) {
 /**
  * Search LRCLIB API via song title and return lyric
  */
-function getLyric(title, artist = null) {
-  let lyric;
-
+async function getLyric(title, artist = null) {
   try {
-    if (artist !== null) {
-      return fetch(
+    let response;
+
+    if (artist) {
+      response = await fetch(
         `https://lrclib.net/api/get?track_name=${title}&artist_name=${artist}`,
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          if (!data.plainLyrics) {
-            throw new Error(`No lyrics found: ${title} ${artist}`);
-          }
-
-          // Clean lyric
-          lyric = data.plainLyrics.replace(/\[.*?\]/g, "").trim();
-          return lyric;
-        });
+      );
     } else {
-      return fetch(`https://lrclib.net/api/search?track_name=${title}`)
-        .then((response) => response.json())
-        .then((data) => {
-          if (!data[0].plainLyrics) {
-            throw new Error(`No lyrics found: ${title}`);
+      response = await fetch(
+        `https://lrclib.net/api/search?track_name=${title}`,
+      );
+    }
+
+    const data = await response.json();
+
+    // Check if lyrics exist
+    const lyrics = artist ? data.plainLyrics : data[0]?.plainLyrics;
+    if (!lyrics) {
+      throw new Error(
+        `No lyrics found: ${title}${artist ? " by " + artist : ""}`,
+      );
           }
 
-          // Clean lyric
-          lyric = data[0].plainLyrics.replace(/\[.*?\]/g, "").trim();
-          return lyric;
-        });
-    }
+    // Clean lyrics
+    return lyrics.replace(/\[.*?\]/g, "").trim();
   } catch (error) {
     console.error("An error occurred: ", error.message);
+    throw error;
   }
 }
 
