@@ -20,6 +20,10 @@ header {
   margin: 10px;
 }
 
+header h1 {
+  margin: auto;
+}
+
 label {
   font-weight: 300;
 }
