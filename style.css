@@ -1,5 +1,6 @@
 :root {
   --bg: #131415;
+  --bg-box: #13141599;
   --text: #e6eef8;
   --primary: #bb44bc;
 }
@@ -14,7 +15,7 @@ body {
 
 header {
   backdrop-filter: blur(5px);
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--bg-box);
   border-radius: 10px;
   padding: 20px;
   margin: 10px;
@@ -24,12 +25,12 @@ header h1 {
   margin: auto;
 }
 
-label {
+header label {
   font-weight: 300;
 }
 
 footer {
-  background-color: #131415;
+  background-color: var(--bg);
 }
 
 footer p {
@@ -94,7 +95,7 @@ footer a {
   padding: 20px;
   margin: 10px;
   backdrop-filter: blur(5px);
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--bg-box);
   border-radius: 10px;
 }
 
@@ -104,7 +105,7 @@ footer a {
   margin: 10px;
   overflow-y: auto;
   backdrop-filter: blur(5px);
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--bg-box);
   border-radius: 10px;
 }
 
@@ -120,7 +121,7 @@ footer a {
   margin: 10px;
   overflow-y: scroll;
   backdrop-filter: blur(5px);
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--bg-box);
   border-radius: 10px;
   font-size: x-large;
 }
