@@ -3,6 +3,7 @@
   --bg-box: #13141599;
   --text: #e6eef8;
   --primary: #bb44bc;
+  --primary-darker: #9c329c;
 }
 
 html,
@@ -29,6 +30,47 @@ header label {
   font-weight: 300;
 }
 
+/* Input fields, select dropdowns, and submit button */
+input[type="url"],
+input[type="release-and-artist"],
+input[type="text"],
+select,
+button {
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border: 2px solid var(--primary);
+  border-radius: 5px;
+  font-family: "Oswald", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+/* Focus effect for input fields and select dropdown */
+input[type="url"]:focus,
+input[type="release-and-artist"]:focus,
+input[type="text"]:focus,
+select:focus {
+  border-color: var(--primary-darker);
+  outline: none;
+}
+
+/* Submit button */
+button {
+  background-color: var(--primary);
+  color: white;
+  cursor: pointer;
+  border: none;
+}
+
+/* Submit button hover effect */
+button:hover {
+  background-color: var(--primary-darker);
+}
+
 footer {
   background-color: var(--bg);
 }
@@ -39,6 +81,7 @@ footer p {
   font-weight: 300;
   font-size: small;
 }
+
 footer a {
   color: inherit;
   text-decoration: none;
