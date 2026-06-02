@@ -14,6 +14,7 @@ body {
   height: 100%;
 }
 
+/* Title and search form */
 header {
   backdrop-filter: blur(5px);
   background-color: var(--bg-box);
@@ -71,6 +72,7 @@ button:hover {
   background-color: var(--primary-darker);
 }
 
+/* Credits */
 footer {
   background-color: var(--bg);
 }
@@ -87,6 +89,7 @@ footer a {
   text-decoration: none;
 }
 
+/* Loading message style with animation */
 .loading {
   opacity: 0.8;
   background: linear-gradient(
@@ -127,6 +130,7 @@ footer a {
   backdrop-filter: blur(3px) saturate(30%);
 }
 
+/* Left (video and metadata) and lyric flexboxes */
 .container {
   display: flex;
   flex-direction: row;
@@ -152,6 +156,7 @@ footer a {
   border-radius: 10px;
 }
 
+/* Video and metadata flexboxes */
 .left-column {
   display: flex;
   flex-direction: column;
@@ -173,6 +178,7 @@ footer a {
   display: none;
 }
 
+/* Mobile layout */
 @media (max-width: 480px) {
   .container {
     flex-direction: column;
