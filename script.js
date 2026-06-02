@@ -60,7 +60,7 @@ async function searchSong(event) {
       insertIframe(videoID);
 
       // Get and print metadata
-      await getMetadataByYoutubeUrl(title).then(async (data) => {
+      await getMetadataByYoutubeTitle(title).then(async (data) => {
         if (!data) {
           removeLoadingElements();
           msg = "Metadata does not exist by YouTube title";
@@ -293,7 +293,7 @@ async function getMetadataBySongAndArtist(title, artist) {
  * @param {string} title
  * @returns {Object} Song metadata
  */
-async function getMetadataByYoutubeUrl(title) {
+async function getMetadataByYoutubeTitle(title) {
   // Format title to reduce search mismatch
   const formattedTitle = title.replace(/\(.*?\)/g, "").trim();
 
