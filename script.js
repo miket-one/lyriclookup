@@ -366,6 +366,8 @@ async function displayMetadata(metadata, artistMetadata = null) {
 
   let release = metadata.released;
 
+  let year = metadata.year;
+
   let genres = [];
   for (genre in metadata.genres) {
     genres.push(metadata.genres[genre]);
@@ -389,7 +391,8 @@ async function displayMetadata(metadata, artistMetadata = null) {
     ${title ? `Title: ${title}<br>` : ""}
     ${artists.length > 0 ? `Artist: ${artists.join(", ")}<br>` : ""}
     ${labels.length > 0 ? `Label: ${labels.join(", ")}<br>` : ""}
-    ${release ? `Released: ${release}\n` : ""}
+    ${release ? `Released: ${release}<br>` : ""}
+    ${year ? `Year: ${year}<br>` : ""}
     ${genres.length > 0 ? `Genre: ${genres.join(", ")}<br>` : ""}
     ${styles.length > 0 ? `Style: ${styles.join(", ")}<br>` : ""}
     ${extraArtists.length > 0 ? `Credits: ${extraArtists.join(", ")}<br>` : ""}
