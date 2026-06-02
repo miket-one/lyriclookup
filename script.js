@@ -385,7 +385,12 @@ async function displayMetadata(metadata, artistMetadata = null) {
     );
   }
 
+  let masterId = metadata.id;
+  let numForSale = parseInt(metadata.num_for_sale);
+  let lowestPrice = parseFloat(metadata.lowest_price).toFixed(2);
+
   const profile = artistMetadata.profile.replace(/\[.*?\]/g, "").trim();
+
   document.getElementById("metadata").innerHTML = `
   <p>
     ${title ? `Title: ${title}<br>` : ""}
@@ -396,6 +401,7 @@ async function displayMetadata(metadata, artistMetadata = null) {
     ${genres.length > 0 ? `Genre: ${genres.join(", ")}<br>` : ""}
     ${styles.length > 0 ? `Style: ${styles.join(", ")}<br>` : ""}
     ${extraArtists.length > 0 ? `Credits: ${extraArtists.join(", ")}<br>` : ""}
+    ${lowestPrice ? `<a href="https://www.discogs.com/sell/list?master_id=${masterId}" class="link" target="_blank" rel="noopener noreferrer">${numForSale} release listing${numForSale === 1 ? "" : "s"} from $${lowestPrice}</a><br>` : ""}
     <br>
     ${artistMetadata.realname ? `${artistMetadata.realname} - ` : ""}
     ${artistMetadata.profile ? `${profile}` : ""}
