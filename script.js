@@ -3,6 +3,9 @@ window.onload = function () {
   document.getElementById("search").click();
 };
 
+/**
+ * Toggle user's search preference between (youtube url) and (release and artist name).
+ */
 function toggleInputFields() {
   const inputType = document.getElementById("input-type").value;
   const urlInput = document.getElementById("url-input");
@@ -23,6 +26,10 @@ function toggleInputFields() {
   }
 }
 
+/**
+ * Main function to search for song when form is submitted.
+ * @param {*} event
+ */
 async function searchSong(event) {
   event.preventDefault();
   resetElements();
@@ -137,7 +144,7 @@ async function searchSong(event) {
 }
 
 /**
- * Reset HTML elements
+ * Reset HTML elements.
  */
 function resetElements() {
   document.getElementById("video").innerHTML = "";
@@ -156,7 +163,7 @@ function resetElements() {
 }
 
 /**
- * Remove loading messages
+ * Remove loading messages.
  */
 function removeLoadingElements() {
   document.getElementById("loading-video").classList.add("hidden");
@@ -165,7 +172,9 @@ function removeLoadingElements() {
 }
 
 /**
- * Get title of YouTube video from noembed API
+ * Get title of YouTube video from noembed API.
+ * @param {URL} url
+ * @returns {string} Cleaned title of YouTube video
  */
 async function getTitleByYoutubeUrl(url) {
   try {
@@ -188,7 +197,8 @@ async function getTitleByYoutubeUrl(url) {
 }
 
 /**
- * Insert iframe of YouTube video
+ * Insert iframe of YouTube video.
+ * @param {string} videoID
  */
 function insertIframe(videoID) {
   try {
@@ -204,7 +214,10 @@ function insertIframe(videoID) {
 }
 
 /**
- * Search LRCLIB API via song title and return lyric
+ * Search LRCLIB API via song title and return lyric.
+ * @param {string} title
+ * @param {string} artist
+ * @returns
  */
 async function getLyric(title, artist = null) {
   try {
@@ -239,7 +252,9 @@ async function getLyric(title, artist = null) {
 
 /**
  * Get song metadata via discogs API search via song title and artist name.
- * @returns {Object} song metadata
+ * @param {string} title
+ * @param {string} artist
+ * @returns {Object} Song metadata
  */
 async function getMetadataBySongAndArtist(title, artist) {
   try {
@@ -274,9 +289,9 @@ async function getMetadataBySongAndArtist(title, artist) {
 }
 
 /**
- * Get song metadata via discogs API search.
+ * Get song metadata via discogs API search query.
  * @param {string} title
- * @returns {Object} song metadata
+ * @returns {Object} Song metadata
  */
 async function getMetadataByYoutubeUrl(title) {
   // Format title to reduce search mismatch
@@ -323,8 +338,9 @@ async function getMetadataByYoutubeUrl(title) {
 }
 
 /**
- * Artist metadata via artist id.
- * @returns {Object} artist metadata
+ * Get artist metadata via artist id.
+ * @param {*} artistId
+ * @returns {Object} Artist metadata
  */
 async function getArtistMetadata(artistId) {
   try {
@@ -350,6 +366,11 @@ async function getArtistMetadata(artistId) {
   }
 }
 
+/**
+ * Display song and artist metadata onto HTML.
+ * @param {Object} metadata
+ * @param {Object} artistMetadata
+ */
 async function displayMetadata(metadata, artistMetadata = null) {
   let title = metadata.title;
   console.log(`Title: ${title}`);
@@ -412,6 +433,7 @@ async function displayMetadata(metadata, artistMetadata = null) {
 
 /**
  * Set background as blurred song cover art.
+ * @param {string} imageUrl
  */
 function setBackgroundImage(imageUrl) {
   const backgroundDiv = document.getElementById("content");
