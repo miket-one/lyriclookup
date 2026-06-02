@@ -122,12 +122,10 @@ footer a {
 
 .content {
   padding: 10px;
-  background-color: var(--bg);
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
-  background-repeat: none;
-  backdrop-filter: blur(3px) saturate(30%);
+  background-repeat: no-repeat;
 }
 
 /* Left (video and metadata) and lyric flexboxes */
