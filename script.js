@@ -406,12 +406,14 @@ async function displayMetadata(metadata, artistMetadata = null) {
     );
   }
 
+  // Data of release media
   let masterId = metadata.id;
   let numForSale = parseInt(metadata.num_for_sale);
   let lowestPrice = parseFloat(metadata.lowest_price).toFixed(2);
 
   const profile = artistMetadata.profile.replace(/\[.*?\]/g, "").trim();
 
+  // Display on HTML
   document.getElementById("metadata").innerHTML = `
   <p>
     ${title ? `Title: ${title}<br>` : ""}
