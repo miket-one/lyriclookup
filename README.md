@@ -42,6 +42,16 @@ The video content, lyrics, and metadata are arranged to fit the user's device vi
 
 </details>
 
+## Usage
+
+Static site, no API keys required.
+
+## Tech stack
+
+- HTML
+- CSS
+- JavaScript (vanilla)
+
 ## Acknowledgments
 
 - [YouTube](https://youtube.com/)
