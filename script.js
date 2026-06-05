@@ -49,11 +49,12 @@ async function searchSong(event) {
       title = await getTitleByYoutubeUrl(ytUrl);
       if (!title) {
         removeLoadingElements();
-        msg = "Failed to load video";
+        msg = "Failed to load video. Please check the URL and try again.";
         document.getElementById("loading-video-error").innerHTML = msg;
         document
           .getElementById("loading-video-error")
           .classList.remove("hidden");
+        alert(msg);
         throw new Error(msg);
       }
 
@@ -192,7 +193,7 @@ async function getTitleByYoutubeUrl(url) {
     return formattedTitle;
   } catch (error) {
     console.error("Failed to fetch title:", error);
-    throw error;
+    return;
   }
 }
 
