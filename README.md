@@ -21,7 +21,17 @@ A fast and responsive website for searching and viewing song lyrics.
 
 <img src="screenshot/mobile.png" style="width: 50%; height: auto">
 
-## Wireframe
+## Design
+
+The website uses a minimalist theme with a focus on readability. 
+
+### Layout
+
+The page is designed with the intention of showing important details to the user, while keeping an overall pleasant user experience.
+
+The video content, lyrics, and metadata are arranged to fit the user's device viewport (100vh). Flexible layout that adapts to different screen sizes using flexbox.
+
+### Wireframe
 
 <details>
 <summary>Click to expand</summary>
