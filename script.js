@@ -269,14 +269,16 @@ async function getMetadataBySongAndArtist(title, artist) {
     }
 
     const data = await response.json();
-    const master_url = data.results[0]?.master_url;
+    const masterUrl = data.results[0]?.master_url;
+    const masterId = data.results[0]?.master_id;
+    console.log("Master ID:", masterId);
 
-    if (!master_url) {
+    if (!masterUrl) {
       throw new Error("Master URL not found");
     }
 
     // Get and return song metadata object
-    const metadataResponse = await fetch(master_url);
+    const metadataResponse = await fetch(masterUrl);
 
     if (!metadataResponse.ok) {
       throw new Error(`Error fetching metadata: ${metadataResponse.status}`);
