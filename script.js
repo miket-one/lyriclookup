@@ -429,9 +429,8 @@ async function displayMetadata(metadata, artistMetadata = null) {
     ${extraArtists.length > 0 ? `Credits: ${extraArtists.join(", ")}<br>` : ""}
     ${lowestPrice && numForSale ? `<a href="https://www.discogs.com/sell/list?master_id=${masterId}" class="link" target="_blank" rel="noopener noreferrer">${numForSale} release listing${numForSale === 1 ? "" : "s"} from $${lowestPrice}</a><br>` : ""}
     <br>
-    ${artistMetadata.realname ? `${artistMetadata.realname} - ` : ""}
-    ${artistMetadata.profile ? `${profile}` : ""}
-  </p>`;
+  </p>
+  <p style="white-space: pre-wrap;">${artistMetadata.realname ? `${artistMetadata.realname} - ` : ""}${artistMetadata.profile ? `${profile}` : ""}</p>`;
 
   document.getElementById("loading-metadata").classList.add("hidden");
 }
