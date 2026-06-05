@@ -98,7 +98,7 @@ async function searchSong(event) {
           document
             .getElementById("loading-metadata-error")
             .classList.remove("hidden");
-          alert("Release and artist does not exist. Please try a new search");
+          alert("Release and artist does not exist. Please try a new search.");
           throw new Error(msg);
         }
 
